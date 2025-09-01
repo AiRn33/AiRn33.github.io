@@ -1,13 +1,682 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <meta charset="utf-8">
-    <title>여기에는 문서의 제목을 입력해주세요</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테스트 타이틀</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
-
 <body>
-    테스트중
-</body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navigation" id="navigation">
+            <h1 class="nav-title">✈️ 여행 가이드</h1>
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="faq">Q&A</button>
+                <button class="nav-tab" data-tab="bulletin">이야기</button>
+                <button class="nav-tab" data-tab="quiz">퀴즈</button>
+                <div class="nav-indicator" id="navIndicator"></div>
+            </div>
+        </nav>
 
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- FAQ Page -->
+            <div class="page active" id="faq-page">
+                <div class="page-header">
+                    <h2 class="page-title">Frequently Asked Questions</h2>
+                    <p class="page-subtitle">Get answers to common travel questions</p>
+                </div>
+
+                <div class="card">
+                    <!-- 해당 영역 부터 카피시 card 영역 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-icon">📍</span>
+                            <span>What are the best travel destinations for beginners?</span>
+                            <span class="faq-chevron">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            For first-time travelers, I recommend starting with destinations that are safe, English-friendly, and have good tourism infrastructure. Popular choices include Japan, New Zealand, Costa Rica, and Portugal. These countries offer amazing experiences while being relatively easy to navigate.
+                        </div>
+                    </div>
+                    <!-- 여기까지 -->
+                </div>
+            </div>
+
+            <!-- Bulletin Board Page -->
+            <div class="page" id="bulletin-page" style="display: none;">
+                <div class="page-header">
+                    <h2 class="page-title">여행 게시판</h2>
+                    <p class="page-subtitle">여행자들의 생생한 이야기를 만나보세요</p>
+                </div>
+                
+                <!-- 해당 영역 부터 카피시 card 영역 -->
+                <div class="card post-card" data-post-id="1">
+                    <div class="post-header">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150" alt="Sarah Chen" class="post-avatar">
+                        <div class="post-author-info">
+                            <div class="post-author">Sarah Chen</div>
+                            <div class="post-meta">
+                                <span>📍</span>
+                                <span>Swiss Alps, Switzerland • 2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <img src="https://images.unsplash.com/photo-1647291718042-676c0428fc25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGxhbmRzY2FwZSUyMHRyYXZlbHxlbnwxfHx8fDE3NTU3MzgwNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Swiss Alps" class="post-thumbnail">
+                        <div class="post-text">
+                            <h3 class="post-title">스위스 알프스에서의 황홀한 아침 하이킹</h3>
+                            <p class="post-excerpt">오전 5시에 일어나서 본 이 놀라운 일출 풍경. 차가운 산 공기와 멋진 전망이 모든 걸음을 가치 있게 만들었어요! 케이블카를 타고 올라가는 것 자체가 모험이었습니다.</p>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="post-stats-left">
+                            <div class="post-stats-item">👁️ 1250</div>
+                            <div class="post-stats-item">❤️ 127</div>
+                            <div class="post-stats-item">💬 23</div>
+                        </div>
+                        <div class="post-actions">
+                            <button class="post-action">❤️</button>
+                            <button class="post-action">💬</button>
+                            <button class="post-action">📤</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 여기까지 -->
+
+                <button class="load-more">더 많은 게시글 보기</button>
+            </div>
+
+            <!-- Quiz Page -->
+            <div class="page" id="quiz-page" style="display:none;">
+                <div class="page-header">
+                    <h2 class="page-title">여행 성향 테스트</h2>
+                    <p class="page-subtitle">당신만의 여행 스타일을 찾아보세요</p>
+                </div>
+
+                <div class="quiz-progress">
+                    <div class="progress-info">
+                        <span>1 / 5</span>
+                        <span>20%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <div class="card quiz-card">
+                    <div class="quiz-question-header">
+                        <span class="quiz-icon">✈️</span>
+                        <h3 class="quiz-question">이상적인 휴가 기간은 얼마나 되나요?</h3>
+                    </div>
+                    <div class="quiz-answers">
+                        <button class="quiz-answer" data-answer="a">
+                            <span>주말 여행 (2-3일)</span>
+                            <span>→</span>
+                        </button>
+                        <button class="quiz-answer" data-answer="b">
+                            <span>일주일 정도</span>
+                            <span>→</span>
+                        </button>
+                        <button class="quiz-answer" data-a7nswer="c">
+                            <span>2주 이상의 장기 여행</span>
+                            <span>→</span>
+                        </button>
+                        <button class="quiz-answer" data-answer="d">
+                            <span>한 달 이상 살아보기</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result (initially hidden) -->
+                <div class="card quiz-result hidden" id="quiz-result">
+                    <div class="result-icon">🏖️</div>
+                    <h3 class="result-title">편안함을 추구하는 여행자</h3>
+                    <p class="result-description">럭셔리한 여행을 선호하며, 편안한 휴식과 완벽한 서비스를 중요하게 생각합니다.</p>
+                    
+                    <div class="result-recommendations">
+                        <div class="result-rec-title">추천 여행지</div>
+                        <div class="result-places">
+                            <span class="result-place">몰디브</span>
+                            <span class="result-place">발리</span>
+                            <span class="result-place">하와이</span>
+                            <span class="result-place">산토리니</span>
+                        </div>
+                    </div>
+
+                    <div class="result-scores">
+                        <h4 class="result-rec-title">성향 분석</h4>
+                        <div class="score-item">
+                            <span class="score-label">모험</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 20%"></div>
+                            </div>
+                            <span class="score-value">3</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">편안함</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 80%"></div>
+                            </div>
+                            <span class="score-value">12</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">문화</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 40%"></div>
+                            </div>
+                            <span class="score-value">6</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">자연</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 30%"></div>
+                            </div>
+                            <span class="score-value">4</span>
+                        </div>
+                    </div>
+
+                    <button class="retry-button">🔄 다시 테스트하기</button>
+                </div>
+            </div>
+
+            <!-- Post Detail Page (initially hidden) -->
+            <div class="page hidden" id="detail-page" style="display:none;">
+                <div class="detail-header">
+                    <button class="back-button">←</button>
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150" alt="Sarah Chen" class="post-avatar">
+                    <div class="post-author-info">
+                        <div class="post-author">Sarah Chen</div>
+                        <div class="post-meta">
+                            <span>📍</span>
+                            <span>Swiss Alps, Switzerland</span>
+                        </div>
+                    </div>
+                </div>
+
+                <img src="https://images.unsplash.com/photo-1647291718042-676c0428fc25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGxhbmRzY2FwZSUyMHRyYXZlbHxlbnwxfHx8fDE3NTU3MzgwNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Swiss Alps" class="detail-image">
+
+                <div class="detail-content">
+                    <div class="detail-stats">
+                        <div>
+                            <span>👁️ 1250</span>
+                            <span style="margin-left: 16px;">🕒 2 hours ago</span>
+                        </div>
+                    </div>
+
+                    <h1 class="detail-title">스위스 알프스에서의 황홀한 아침 하이킹</h1>
+                    <p class="detail-text">
+                        오전 5시에 일어나서 본 이 놀라운 일출 풍경. 차가운 산 공기와 멋진 전망이 모든 걸음을 가치 있게 만들었어요! 케이블카를 타고 올라가는 것 자체가 모험이었습니다. 팁: 여름에도 고도가 높으면 추우니 옷을 여러 겹 준비하세요. 알프스의 웅장함은 정말 말로 표현할 수 없을 정도예요. 특히 새벽 하이킹은 사람도 적고 고요한 자연을 온전히 느낄 수 있어서 추천합니다.
+                    </p>
+
+                    <div class="detail-actions">
+                        <div class="action-group">
+                            <button class="action-button" id="like-button">
+                                <span>❤️</span>
+                                <span id="like-count">127</span>
+                            </button>
+                            <button class="action-button">
+                                <span>💬</span>
+                                <span>23</span>
+                            </button>
+                        </div>
+                        <button class="action-button">📤</button>
+                    </div>
+
+                    <div class="comments-section">
+                        <h3 class="comments-title">댓글 3개</h3>
+                        
+                        <form class="comment-form">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150" alt="내 프로필" class="comment-avatar">
+                            <div class="comment-input-group">
+                                <input type="text" class="comment-input" placeholder="댓글을 입력하세요..." id="comment-input">
+                                <button type="submit" class="comment-submit" disabled>📤</button>
+                            </div>
+                        </form>
+
+                        <div class="comment">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="김민수" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-bubble">
+                                    <div class="comment-author">김민수</div>
+                                    <div class="comment-text">정말 멋진 사진이네요! 저도 다음에 꼭 가보고 싶어요 ✨</div>
+                                </div>
+                                <div class="comment-meta">
+                                    <span>1시간 전</span>
+                                    <button>❤️ 12</button>
+                                    <button>답글</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150" alt="이지은" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-bubble">
+                                    <div class="comment-author">이지은</div>
+                                    <div class="comment-text">사진만 봐도 그 곳의 아름다움이 느껴져요. 팁도 공유해주셔서 감사해요!</div>
+                                </div>
+                                <div class="comment-meta">
+                                    <span>3시간 전</span>
+                                    <button>❤️ 8</button>
+                                    <button>답글</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="박준호" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-bubble">
+                                    <div class="comment-author">박준호</div>
+                                    <div class="comment-text">와 진짜 환상적이네요! 몇 월에 가셨나요? 날씨는 어땠는지 궁금해요 🌟</div>
+                                </div>
+                                <div class="comment-meta">
+                                    <span>5시간 전</span>
+                                    <button>❤️ 15</button>
+                                    <button>답글</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Floating Background Elements -->
+        <div class="floating-bg floating-1"></div>
+        <div class="floating-bg floating-2"></div>
+        <div class="floating-bg floating-3"></div>
+    </div>
+
+    <script>
+        // App State
+        let currentTab = 'faq';
+        let currentQuestion = 0;
+        let quizScores = { adventure: 0, comfort: 0, culture: 0, nature: 0 };
+        let isLiked = false;
+        let tabList = ['bulletin', 'quiz', 'faq'];
+
+        // Quiz Data
+        const quizData = [
+            {
+                question: "이상적인 휴가 기간은 얼마나 되나요?",
+                icon: "✈️",
+                answers: [
+                    { text: "주말 여행 (2-3일)", scores: { adventure: 1, comfort: 2, culture: 1, nature: 1 } },
+                    { text: "일주일 정도", scores: { adventure: 2, comfort: 2, culture: 2, nature: 2 } },
+                    { text: "2주 이상의 장기 여행", scores: { adventure: 3, comfort: 1, culture: 3, nature: 3 } },
+                    { text: "한 달 이상 살아보기", scores: { adventure: 3, comfort: 1, culture: 3, nature: 2 } }
+                ]
+            },
+            {
+                question: "여행지에서 가장 중요하게 생각하는 것은?",
+                icon: "📍",
+                answers: [
+                    { text: "편안한 숙소와 시설", scores: { adventure: 0, comfort: 3, culture: 1, nature: 0 } },
+                    { text: "현지 문화 체험", scores: { adventure: 1, comfort: 1, culture: 3, nature: 1 } },
+                    { text: "자연 경관과 아웃도어 활동", scores: { adventure: 3, comfort: 0, culture: 1, nature: 3 } },
+                    { text: "새로운 모험과 도전", scores: { adventure: 3, comfort: 0, culture: 2, nature: 2 } }
+                ]
+            },
+            {
+                question: "여행 중 숙소 선택 기준은?",
+                icon: "❤️",
+                answers: [
+                    { text: "5성급 호텔이나 리조트", scores: { adventure: 0, comfort: 3, culture: 1, nature: 1 } },
+                    { text: "현지 게스트하우스나 민박", scores: { adventure: 2, comfort: 1, culture: 3, nature: 2 } },
+                    { text: "캠핑이나 글램핑", scores: { adventure: 3, comfort: 1, culture: 1, nature: 3 } },
+                    { text: "백패커 호스텔", scores: { adventure: 3, comfort: 0, culture: 2, nature: 2 } }
+                ]
+            },
+            {
+                question: "여행 중 가장 좋아하는 활동은?",
+                icon: "📸",
+                answers: [
+                    { text: "스파와 휴식, 쇼핑", scores: { adventure: 0, comfort: 3, culture: 1, nature: 0 } },
+                    { text: "박물관, 역사 유적지 방문", scores: { adventure: 1, comfort: 2, culture: 3, nature: 1 } },
+                    { text: "하이킹, 수상 스포츠", scores: { adventure: 3, comfort: 0, culture: 1, nature: 3 } },
+                    { text: "익스트림 스포츠", scores: { adventure: 3, comfort: 0, culture: 0, nature: 2 } }
+                ]
+            },
+            {
+                question: "현지 음식에 대한 당신의 스타일은?",
+                icon: "🍽️",
+                answers: [
+                    { text: "검증된 유명 레스토랑만", scores: { adventure: 0, comfort: 3, culture: 2, nature: 0 } },
+                    { text: "현지인들이 가는 맛집 탐방", scores: { adventure: 2, comfort: 1, culture: 3, nature: 1 } },
+                    { text: "길거리 음식도 과감하게", scores: { adventure: 3, comfort: 0, culture: 3, nature: 1 } },
+                    { text: "직접 요리 체험하기", scores: { adventure: 2, comfort: 1, culture: 3, nature: 2 } }
+                ]
+            }
+        ];
+
+        const travelTypes = {
+            comfort: {
+                title: "편안함을 추구하는 여행자",
+                description: "럭셔리한 여행을 선호하며, 편안한 휴식과 완벽한 서비스를 중요하게 생각합니다.",
+                icon: "🏖️",
+                recommendations: ["몰디브", "발리", "하와이", "산토리니"]
+            },
+            culture: {
+                title: "문화 탐험가",
+                description: "현지 문화와 역사를 깊이 있게 체험하며, 진정성 있는 여행을 추구합니다.",
+                icon: "🏛️",
+                recommendations: ["교토", "로마", "이스탄불", "페루"]
+            },
+            adventure: {
+                title: "모험을 즐기는 여행자",
+                description: "새로운 도전과 스릴을 찾으며, 예측 불가능한 여행을 즐깁니다.",
+                icon: "🎒",
+                recommendations: ["뉴질랜드", "코스타리카", "네팔", "파타고니아"]
+            },
+            nature: {
+                title: "자연을 사랑하는 여행자",
+                description: "자연 속에서 평온함을 찾으며, 환경과 조화로운 여행을 선호합니다.",
+                icon: "🌲",
+                recommendations: ["노르웨이", "캐나다", "아이슬란드", "뉴질랜드"]
+            }
+        };
+
+        // DOM Elements
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const navIndicator = document.getElementById('navIndicator');
+        const pages = document.querySelectorAll('.page');
+        const navigation = document.getElementById('navigation');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeNavigation();
+            initializeFAQ();
+            initializeBulletin();
+            initializeQuiz();
+            initializePostDetail();
+        });
+
+        // Navigation
+        function initializeNavigation() {
+            navTabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+                    switchTab(tabName, index);
+                });
+            });
+        }
+
+        function switchTab(tabName, index) {
+            
+            for(let i = 0;  i < tabList.length; i++){
+                let currentTabId = '#' + tabList[i] + '-page';  
+                if(tabName == tabList[i]){
+                    document.querySelector(currentTabId).style.display = 'block';
+                }else{
+                    document.querySelector(currentTabId).style.display = 'none';
+                }
+            }
+
+            // Update active tab
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            navTabs[index].classList.add('active');
+            
+            // Move indicator
+            navIndicator.style.left = `${index * 33.333}%`;
+            
+            // Switch page
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === `${tabName}-page`) {
+                    page.classList.add('active');
+                }
+            });
+            
+            // Show/hide navigation
+            if (tabName === 'detail') {
+                navigation.classList.add('hidden');
+            } else {
+                navigation.classList.remove('hidden');
+            }
+            
+            currentTab = tabName;
+        }
+
+        // FAQ
+        function initializeFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                //const question = item.querySelector('.faq-question');
+                item.addEventListener('click', () => {
+
+                    const isOpen = item.classList.contains('open');
+                    
+                    // Close all items
+                    faqItems.forEach(i => i.classList.remove('open'));
+                    
+                    // Toggle current item
+                    if (!isOpen) {
+                        item.classList.add('open');
+                    }
+                });
+            });
+        }
+
+        // Bulletin Board
+        function initializeBulletin() {
+            const postCards = document.querySelectorAll('.post-card');
+            
+            postCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Prevent click on action buttons
+                    if (e.target.closest('.post-actions')) return;
+                    
+                    showPostDetail();
+                });
+            });
+
+            // Post action buttons
+            const postActions = document.querySelectorAll('.post-action');
+            postActions.forEach(action => {
+                action.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Handle like, comment, share actions
+                });
+            });
+        }
+
+        function showPostDetail() {
+            // Hide navigation
+            navigation.classList.add('hidden');
+            
+            // Show detail page
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById('detail-page').classList.add('active');
+            document.getElementById('detail-page').classList.remove('hidden');
+        }
+
+        // Quiz
+        function initializeQuiz() {
+            renderQuizQuestion();
+            
+            const retryButton = document.querySelector('.retry-button');
+            retryButton.addEventListener('click', resetQuiz);
+        }
+
+        function renderQuizQuestion() {
+            const quizCard = document.querySelector('.quiz-card');
+            const progressInfo = document.querySelector('.progress-info');
+            const progressFill = document.querySelector('.progress-fill');
+            
+            const question = quizData[currentQuestion];
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            
+            // Update progress
+            progressInfo.innerHTML = `<span>${currentQuestion + 1} / ${quizData.length}</span><span>${Math.round(progress)}%</span>`;
+            progressFill.style.width = `${progress}%`;
+            
+            // Update question
+            quizCard.innerHTML = `
+                <div class="quiz-question-header">
+                    <span class="quiz-icon">${question.icon}</span>
+                    <h3 class="quiz-question">${question.question}</h3>
+                </div>
+                <div class="quiz-answers">
+                    ${question.answers.map((answer, index) => `
+                        <button class="quiz-answer" data-answer="${index}">
+                            <span>${answer.text}</span>
+                            <span>→</span>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+
+            // Add event listeners
+            const answerButtons = quizCard.querySelectorAll('.quiz-answer');
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerIndex = parseInt(button.dataset.answer);
+                    handleQuizAnswer(answerIndex);
+                });
+            });
+        }
+
+        function handleQuizAnswer(answerIndex) {
+            const question = quizData[currentQuestion];
+            const selectedAnswer = question.answers[answerIndex];
+            // Update scores
+            Object.keys(selectedAnswer.scores).forEach(key => {
+                quizScores[key] += selectedAnswer.scores[key];
+            });
+            
+            // Move to next question or show result
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                setTimeout(() => renderQuizQuestion(), 300);
+            } else {
+                setTimeout(() => showQuizResult(), 300);
+            }
+        }
+
+        function showQuizResult() {
+            // Hide quiz card and progress
+            document.querySelector('.quiz-card').classList.add('hidden');
+            document.querySelector('.quiz-progress').classList.add('hidden');
+            
+            // Get top travel type
+            const maxScore = Math.max(...Object.values(quizScores));
+            const topType = Object.keys(quizScores).find(key => quizScores[key] === maxScore);
+            const result = travelTypes[topType];
+            
+            // Show result
+            const resultCard = document.getElementById('quiz-result');
+            resultCard.innerHTML = `
+                <div class="result-icon">${result.icon}</div>
+                <h3 class="result-title">${result.title}</h3>
+                <p class="result-description">${result.description}</p>
+                
+                <div class="result-recommendations">
+                    <div class="result-rec-title">추천 여행지</div>
+                    <div class="result-places">
+                        ${result.recommendations.map(place => `
+                            <span class="result-place">${place}</span>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="result-scores">
+                    <h4 class="result-rec-title">성향 분석</h4>
+                    ${Object.entries(quizScores).map(([type, score]) => {
+                        const label = type === 'adventure' ? '모험' : 
+                                    type === 'comfort' ? '편안함' : 
+                                    type === 'culture' ? '문화' : '자연';
+                        const percentage = (score / 15) * 100;
+                        return `
+                            <div class="score-item">
+                                <span class="score-label">${label}</span>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: ${percentage}%"></div>
+                                </div>
+                                <span class="score-value">${score}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <button class="retry-button">🔄 다시 테스트하기</button>
+            `;
+            
+            resultCard.classList.remove('hidden');
+            
+            // Add retry button listener
+            resultCard.querySelector('.retry-button').addEventListener('click', resetQuiz);
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            quizScores = { adventure: 0, comfort: 0, culture: 0, nature: 0 };
+            
+            // Show quiz elements
+            document.querySelector('.quiz-card').classList.remove('hidden');
+            document.querySelector('.quiz-progress').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            
+            // Render first question
+            renderQuizQuestion();
+        }
+
+        // Post Detail
+        function initializePostDetail() {
+            const backButton = document.querySelector('.back-button');
+            const likeButton = document.getElementById('like-button');
+            const commentInput = document.getElementById('comment-input');
+            const commentSubmit = document.querySelector('.comment-submit');
+            
+            backButton.addEventListener('click', () => {
+                // Show navigation
+                navigation.classList.remove('hidden');
+                
+                // Go back to bulletin
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById('bulletin-page').classList.add('active');
+                document.getElementById('detail-page').classList.add('hidden');
+                
+                // Update nav
+                navTabs.forEach(tab => tab.classList.remove('active'));
+                navTabs[1].classList.add('active'); // bulletin tab
+                navIndicator.style.left = '33.333%';
+            });
+            
+            likeButton.addEventListener('click', () => {
+                isLiked = !isLiked;
+                const likeCount = document.getElementById('like-count');
+                const currentCount = parseInt(likeCount.textContent);
+                
+                if (isLiked) {
+                    likeButton.classList.add('liked');
+                    likeCount.textContent = currentCount + 1;
+                } else {
+                    likeButton.classList.remove('liked');
+                    likeCount.textContent = currentCount - 1;
+                }
+            });
+            
+            commentInput.addEventListener('input', (e) => {
+                const hasText = e.target.value.trim().length > 0;
+                commentSubmit.disabled = !hasText;
+            });
+            
+            document.querySelector('.comment-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (commentInput.value.trim()) {
+                    // Add comment (in a real app, this would send to server)
+                    commentInput.value = '';
+                    commentSubmit.disabled = true;
+                }
+            });
+        }
+    </script>
+</body>
 </html>
