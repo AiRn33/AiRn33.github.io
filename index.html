@@ -1,681 +1,1202 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ja" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테스트 타이틀</title>
-    
-    <link rel="stylesheet" href="./css/style.css">
-
+    <title>Portfolio - 田中太郎</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#ffffff',
+                        foreground: '#000000',
+                        card: '#ffffff',
+                        'card-foreground': '#000000',
+                        primary: '#000000',
+                        'primary-foreground': '#ffffff',
+                        secondary: '#f8f9fa',
+                        'secondary-foreground': '#000000',
+                        muted: '#f1f3f4',
+                        'muted-foreground': '#6c757d',
+                        accent: '#e9ecef',
+                        'accent-foreground': '#000000',
+                        border: 'rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #000 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .skill-badge {
+            transition: all 0.2s ease;
+        }
+        
+        .skill-badge:hover {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .swiper-container {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .swiper-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .swiper-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .swiper-slide.prev {
+            transform: translateX(-100%);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-bar.active {
+            width: 32px;
+            background-color: #000;
+        }
+        
+        .progress-bar:not(.active) {
+            width: 8px;
+            background-color: #f1f3f4;
+        }
+    </style>
 </head>
-<body>
-    <div class="app-container">
-        <!-- Navigation -->
-        <nav class="navigation" id="navigation">
-            <h1 class="nav-title">✈️ 여행 가이드</h1>
-            <div class="nav-tabs">
-                <button class="nav-tab active" data-tab="faq">Q&A</button>
-                <button class="nav-tab" data-tab="bulletin">이야기</button>
-                <button class="nav-tab" data-tab="quiz">퀴즈</button>
-                <div class="nav-indicator" id="navIndicator"></div>
+<body class="min-h-screen bg-background">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Left - Brand -->
+                <div>
+                    <h1 class="text-2xl font-medium uppercase tracking-wide">PORTFOLIO</h1>
+                </div>
+
+                <!-- Right - Tab Navigation -->
+                <nav class="flex gap-8">
+                    <button onclick="showTab('about')" id="tab-about" class="tab-btn relative py-2 transition-colors duration-200 text-foreground">
+                        自己紹介
+                        <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary"></div>
+                    </button>
+                    <button onclick="showTab('career')" id="tab-career" class="tab-btn relative py-2 transition-colors duration-200 text-muted-foreground hover:text-foreground">
+                        職歴
+                        <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary hidden"></div>
+                    </button>
+                    <button onclick="showTab('portfolio')" id="tab-portfolio" class="tab-btn relative py-2 transition-colors duration-200 text-muted-foreground hover:text-foreground">
+                        ポートフォリオ
+                        <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary hidden"></div>
+                    </button>
+                    <button onclick="showTab('projects')" id="tab-projects" class="tab-btn relative py-2 transition-colors duration-200 text-muted-foreground hover:text-foreground">
+                        プロジェクト
+                        <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary hidden"></div>
+                    </button>
+                </nav>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- FAQ Page -->
-            <div class="page active" id="faq-page">
-                <div class="page-header">
-                    <h2 class="page-title">Frequently Asked Questions</h2>
-                    <p class="page-subtitle">Get answers to common travel questions</p>
-                </div>
+    <!-- Content -->
+    <div class="content-container">
+        <!-- About Me Tab -->
+        <div id="about-content" class="tab-content active">
+            <div class="bg-gradient-to-br from-background to-secondary/30 p-6 min-h-screen flex flex-col">
+                <div class="max-w-4xl mx-auto flex-1">
+                    <!-- Header -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold mb-4 gradient-text">自己紹介</h1>
+                        <p class="text-muted-foreground max-w-2xl mx-auto">
+                            こんにちは！私についてもっと詳しく知ってください。
+                        </p>
+                    </div>
 
-                <div class="card">
-                    <!-- 해당 영역 부터 카피시 card 영역 -->
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span class="faq-icon">📍</span>
-                            <span>What are the best travel destinations for beginners?</span>
-                            <span class="faq-chevron">▼</span>
-                        </button>
-                        <div class="faq-answer">
-                            For first-time travelers, I recommend starting with destinations that are safe, English-friendly, and have good tourism infrastructure. Popular choices include Japan, New Zealand, Costa Rica, and Portugal. These countries offer amazing experiences while being relatively easy to navigate.
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Profile Card -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-card rounded-lg border border-border p-8 text-center card-hover">
+                                <!-- Profile Photo -->
+                                <div class="mb-6">
+                                    <div class="relative w-32 h-32 mx-auto mb-4">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" 
+                                             alt="Profile Picture" 
+                                             class="w-full h-full object-cover rounded-full border-4 border-border shadow-lg">
+                                        <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-primary rounded-full border-4 border-background flex items-center justify-center">
+                                            <span class="text-primary-foreground text-lg">♥</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Basic Info -->
+                                <div class="mb-6">
+                                    <h2 class="text-2xl font-semibold mb-2">田中太郎</h2>
+                                    <p class="text-muted-foreground mb-4">フロントエンド・バックエンド開発者</p>
+                                    
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <span>📍</span>
+                                            <span>東京、日本</span>
+                                        </div>
+                                        <div class="flex items-center justify-center gap-2">
+                                            <span>✉️</span>
+                                            <span>your.email@example.com</span>
+                                        </div>
+                                        <div class="flex items-center justify-center gap-2">
+                                            <span>📱</span>
+                                            <span>090-1234-5678</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="mb-6 border-border">
+
+                                <!-- Social Links -->
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-medium mb-4">ソーシャルリンク</h3>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button class="flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-md hover:bg-gray-100 transition-colors">
+                                            <span>📧</span>
+                                            <span class="text-sm">GitHub</span>
+                                        </button>
+                                        <button class="flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-md hover:bg-blue-50 transition-colors">
+                                            <span>💼</span>
+                                            <span class="text-sm">LinkedIn</span>
+                                        </button>
+                                        <button class="flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-md hover:bg-blue-50 transition-colors">
+                                            <span>🐦</span>
+                                            <span class="text-sm">Twitter</span>
+                                        </button>
+                                        <button class="flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-md hover:bg-green-50 transition-colors">
+                                            <span>🌐</span>
+                                            <span class="text-sm">Website</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Download Resume -->
+                                <button class="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+                                    <span>📥</span>
+                                    履歴書ダウンロード
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- About Me -->
+                            <div class="bg-card rounded-lg border border-border p-8 card-hover">
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="text-xl">☕</span>
+                                    <h3 class="text-lg font-medium">About Me</h3>
+                                </div>
+                                <p class="text-muted-foreground leading-relaxed">
+                                    ユーザー体験を重視するフルスタック開発者として、綺麗で効率的なコードで価値あるサービスを作り上げています。新しい技術を学ぶことを楽しみ、チームとともに成長することを追求しています。
+                                </p>
+                            </div>
+
+                            <!-- Stats -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="bg-card rounded-lg border border-border p-4 text-center card-hover">
+                                    <div class="text-xl mb-2">📅</div>
+                                    <div class="text-2xl font-bold mb-1">4年+</div>
+                                    <div class="text-sm text-muted-foreground">経歴</div>
+                                </div>
+                                <div class="bg-card rounded-lg border border-border p-4 text-center card-hover">
+                                    <div class="text-xl mb-2">💻</div>
+                                    <div class="text-2xl font-bold mb-1">20+</div>
+                                    <div class="text-sm text-muted-foreground">プロジェクト</div>
+                                </div>
+                                <div class="bg-card rounded-lg border border-border p-4 text-center card-hover">
+                                    <div class="text-xl mb-2">⭐</div>
+                                    <div class="text-2xl font-bold mb-1">14個</div>
+                                    <div class="text-sm text-muted-foreground">技術スタック</div>
+                                </div>
+                                <div class="bg-card rounded-lg border border-border p-4 text-center card-hover">
+                                    <div class="text-xl mb-2">🏆</div>
+                                    <div class="text-2xl font-bold mb-1">3個</div>
+                                    <div class="text-sm text-muted-foreground">成果</div>
+                                </div>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="bg-card rounded-lg border border-border p-8 card-hover">
+                                <div class="flex items-center gap-2 mb-6">
+                                    <span class="text-xl">💻</span>
+                                    <h3 class="text-lg font-medium">技術スタック</h3>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">React</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">TypeScript</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Node.js</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Python</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">AWS</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Docker</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">MongoDB</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Vue.js</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Next.js</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Express.js</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Git</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Figma</span>
+                                    <span class="skill-badge bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">Linux</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Interests -->
+                                <div class="bg-card rounded-lg border border-border p-6 card-hover">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span class="text-xl">❤️</span>
+                                        <h3 class="text-lg font-medium">関心事</h3>
+                                    </div>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                            オープンソース
+                                        </li>
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                            UI/UXデザイン
+                                        </li>
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                            写真
+                                        </li>
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                            旅行
+                                        </li>
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                            読書
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Achievements -->
+                                <div class="bg-card rounded-lg border border-border p-6 card-hover">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span class="text-xl">🏆</span>
+                                        <h3 class="text-lg font-medium">主な成果</h3>
+                                    </div>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full"></span>
+                                            オープンソースプロジェクト5+件貢献
+                                        </li>
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full"></span>
+                                            開発者カンファレンス発表3回
+                                        </li>
+                                        <li class="flex items-center gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full"></span>
+                                            社内ハッカソン優勝2回
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!-- 여기까지 -->
                 </div>
             </div>
+        </div>
 
-            <!-- Bulletin Board Page -->
-            <div class="page" id="bulletin-page" style="display: none;">
-                <div class="page-header">
-                    <h2 class="page-title">여행 게시판</h2>
-                    <p class="page-subtitle">여행자들의 생생한 이야기를 만나보세요</p>
-                </div>
-                
-                <!-- 해당 영역 부터 카피시 card 영역 -->
-                <div class="card post-card" data-post-id="1">
-                    <div class="post-header">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150" alt="Sarah Chen" class="post-avatar">
-                        <div class="post-author-info">
-                            <div class="post-author">Sarah Chen</div>
-                            <div class="post-meta">
-                                <span>📍</span>
-                                <span>Swiss Alps, Switzerland • 2 hours ago</span>
+        <!-- Career Tab -->
+        <div id="career-content" class="tab-content">
+            <div class="bg-gradient-to-br from-background to-secondary/30 p-6 min-h-screen flex flex-col">
+                <div class="max-w-4xl mx-auto flex-1">
+                    <!-- Header -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold mb-4 gradient-text">職歴一覧</h1>
+                        <p class="text-muted-foreground max-w-2xl mx-auto">
+                            カードを左右にスワイプするか、ボタンをクリックして職歴を探索してください。
+                        </p>
+                    </div>
+
+                    <!-- Card Navigation -->
+                    <div class="relative max-w-2xl mx-auto">
+                        <!-- Progress Indicator -->
+                        <div class="flex justify-center mb-8 gap-2">
+                            <div class="progress-bar active" data-index="0"></div>
+                            <div class="progress-bar" data-index="1"></div>
+                            <div class="progress-bar" data-index="2"></div>
+                            <div class="progress-bar" data-index="3"></div>
+                        </div>
+
+                        <!-- Card Container -->
+                        <div class="swiper-container">
+                            <!-- Experience 1 -->
+                            <div class="swiper-slide active bg-card rounded-lg border-2 border-border p-8">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span>📅</span>
+                                    <span class="text-sm text-muted-foreground">2022.03 - 現在</span>
+                                </div>
+                                
+                                <h2 class="text-xl font-semibold mb-2">シニアフルスタック開発者</h2>
+                                
+                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
+                                    <div class="flex items-center gap-2">
+                                        <span>🏢</span>
+                                        <span>テックスタートアップ ABC</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span>📍</span>
+                                        <span>東京、日本</span>
+                                    </div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3 flex items-center gap-2">
+                                        <span>💼</span>
+                                        主な業務
+                                    </h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            Webアプリケーション全体のアーキテクチャ設計と開発リード
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            React基盤フロントエンド開発およびNode.jsバックエンドAPI構築
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            AWSを活用したクラウドインフラ構築およびDevOps業務
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            コードレビューおよびジュニア開発者メンタリング
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Achievements -->
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3">主な成果</h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            サービス性能40%向上
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            チーム生産性25%向上
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            新規サービスローンチ成功
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Skills -->
+                                <div>
+                                    <h3 class="font-medium mb-3">技術スタック</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">React</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Node.js</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">TypeScript</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">AWS</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Docker</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">PostgreSQL</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Experience 2 -->
+                            <div class="swiper-slide bg-card rounded-lg border-2 border-border p-8">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span>📅</span>
+                                    <span class="text-sm text-muted-foreground">2020.06 - 2022.02</span>
+                                </div>
+                                
+                                <h2 class="text-xl font-semibold mb-2">フロントエンド開発者</h2>
+                                
+                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
+                                    <div class="flex items-center gap-2">
+                                        <span>🏢</span>
+                                        <span>Webエージェンシー XYZ</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span>📍</span>
+                                        <span>東京、日本</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3 flex items-center gap-2">
+                                        <span>💼</span>
+                                        主な業務
+                                    </h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            React、Vue.jsを活用したレスポンシブWebサイト開発
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            様々なクライアントプロジェクト参加およびUI/UX実装
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            クロスブラウザ対応およびWeb性能最適化
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            デザイナーおよびバックエンド開発者との協業
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3">主な成果</h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            20+クライアントプロジェクト完了
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            Web性能スコア90%以上達成
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-medium mb-3">技術スタック</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">React</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Vue.js</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">JavaScript</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">SCSS</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Webpack</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Figma</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Experience 3 -->
+                            <div class="swiper-slide bg-card rounded-lg border-2 border-border p-8">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span>📅</span>
+                                    <span class="text-sm text-muted-foreground">2019.01 - 2020.05</span>
+                                </div>
+                                
+                                <h2 class="text-xl font-semibold mb-2">ジュニア開発者</h2>
+                                
+                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
+                                    <div class="flex items-center gap-2">
+                                        <span>🏢</span>
+                                        <span>ITソリューション会社 DEF</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span>📍</span>
+                                        <span>千葉、日本</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3 flex items-center gap-2">
+                                        <span>💼</span>
+                                        主な業務
+                                    </h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            Java Spring基盤バックエンドAPI開発
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            データベース設計および最適化
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            既存レガシーシステム保守
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            RESTful API設計および実装
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3">主な成果</h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            API応答速度50%向上
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            レガシーシステムモダン化に貢献
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-medium mb-3">技術スタック</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Java</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Spring Boot</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">MySQL</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">JPA</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Git</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Linux</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Experience 4 -->
+                            <div class="swiper-slide bg-card rounded-lg border-2 border-border p-8">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span>📅</span>
+                                    <span class="text-sm text-muted-foreground">2018.03 - 2018.12</span>
+                                </div>
+                                
+                                <h2 class="text-xl font-semibold mb-2">開発インターン</h2>
+                                
+                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
+                                    <div class="flex items-center gap-2">
+                                        <span>🏢</span>
+                                        <span>スタートアップ GHI</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span>📍</span>
+                                        <span>東京、日本</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3 flex items-center gap-2">
+                                        <span>💼</span>
+                                        主な業務
+                                    </h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            Webアプリケーションフロントエンド開発アシスタント
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            UIコンポーネント開発およびテスト
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            バグ修正および機能改善
+                                        </li>
+                                        <li class="flex items-start gap-2 text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2"></span>
+                                            開発ドキュメント作成および管理
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="mb-6">
+                                    <h3 class="font-medium mb-3">主な成果</h3>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            UIコンポーネントライブラリ構築
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2"></span>
+                                            開発チームプロセス改善
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-medium mb-3">技術スタック</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">HTML</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">CSS</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">JavaScript</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">jQuery</span>
+                                        <span class="bg-secondary text-secondary-foreground text-xs px-3 py-1 rounded-full">Bootstrap</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="post-content">
-                        <img src="https://images.unsplash.com/photo-1647291718042-676c0428fc25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGxhbmRzY2FwZSUyMHRyYXZlbHxlbnwxfHx8fDE3NTU3MzgwNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Swiss Alps" class="post-thumbnail">
-                        <div class="post-text">
-                            <h3 class="post-title">스위스 알프스에서의 황홀한 아침 하이킹</h3>
-                            <p class="post-excerpt">오전 5시에 일어나서 본 이 놀라운 일출 풍경. 차가운 산 공기와 멋진 전망이 모든 걸음을 가치 있게 만들었어요! 케이블카를 타고 올라가는 것 자체가 모험이었습니다.</p>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="post-stats-left">
-                            <div class="post-stats-item">👁️ 1250</div>
-                            <div class="post-stats-item">❤️ 127</div>
-                            <div class="post-stats-item">💬 23</div>
-                        </div>
-                        <div class="post-actions">
-                            <button class="post-action">❤️</button>
-                            <button class="post-action">💬</button>
-                            <button class="post-action">📤</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 여기까지 -->
 
-                <button class="load-more">더 많은 게시글 보기</button>
-            </div>
-
-            <!-- Quiz Page -->
-            <div class="page" id="quiz-page" style="display:none;">
-                <div class="page-header">
-                    <h2 class="page-title">여행 성향 테스트</h2>
-                    <p class="page-subtitle">당신만의 여행 스타일을 찾아보세요</p>
-                </div>
-
-                <div class="quiz-progress">
-                    <div class="progress-info">
-                        <span>1 / 5</span>
-                        <span>20%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 20%"></div>
-                    </div>
-                </div>
-
-                <div class="card quiz-card">
-                    <div class="quiz-question-header">
-                        <span class="quiz-icon">✈️</span>
-                        <h3 class="quiz-question">이상적인 휴가 기간은 얼마나 되나요?</h3>
-                    </div>
-                    <div class="quiz-answers">
-                        <button class="quiz-answer" data-answer="a">
-                            <span>주말 여행 (2-3일)</span>
-                            <span>→</span>
-                        </button>
-                        <button class="quiz-answer" data-answer="b">
-                            <span>일주일 정도</span>
-                            <span>→</span>
-                        </button>
-                        <button class="quiz-answer" data-a7nswer="c">
-                            <span>2주 이상의 장기 여행</span>
-                            <span>→</span>
-                        </button>
-                        <button class="quiz-answer" data-answer="d">
-                            <span>한 달 이상 살아보기</span>
-                            <span>→</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Quiz Result (initially hidden) -->
-                <div class="card quiz-result hidden" id="quiz-result">
-                    <div class="result-icon">🏖️</div>
-                    <h3 class="result-title">편안함을 추구하는 여행자</h3>
-                    <p class="result-description">럭셔리한 여행을 선호하며, 편안한 휴식과 완벽한 서비스를 중요하게 생각합니다.</p>
-                    
-                    <div class="result-recommendations">
-                        <div class="result-rec-title">추천 여행지</div>
-                        <div class="result-places">
-                            <span class="result-place">몰디브</span>
-                            <span class="result-place">발리</span>
-                            <span class="result-place">하와이</span>
-                            <span class="result-place">산토리니</span>
-                        </div>
-                    </div>
-
-                    <div class="result-scores">
-                        <h4 class="result-rec-title">성향 분석</h4>
-                        <div class="score-item">
-                            <span class="score-label">모험</span>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: 20%"></div>
-                            </div>
-                            <span class="score-value">3</span>
-                        </div>
-                        <div class="score-item">
-                            <span class="score-label">편안함</span>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: 80%"></div>
-                            </div>
-                            <span class="score-value">12</span>
-                        </div>
-                        <div class="score-item">
-                            <span class="score-label">문화</span>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: 40%"></div>
-                            </div>
-                            <span class="score-value">6</span>
-                        </div>
-                        <div class="score-item">
-                            <span class="score-label">자연</span>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: 30%"></div>
-                            </div>
-                            <span class="score-value">4</span>
-                        </div>
-                    </div>
-
-                    <button class="retry-button">🔄 다시 테스트하기</button>
-                </div>
-            </div>
-
-            <!-- Post Detail Page (initially hidden) -->
-            <div class="page hidden" id="detail-page" style="display:none;">
-                <div class="detail-header">
-                    <button class="back-button">←</button>
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150" alt="Sarah Chen" class="post-avatar">
-                    <div class="post-author-info">
-                        <div class="post-author">Sarah Chen</div>
-                        <div class="post-meta">
-                            <span>📍</span>
-                            <span>Swiss Alps, Switzerland</span>
-                        </div>
-                    </div>
-                </div>
-
-                <img src="https://images.unsplash.com/photo-1647291718042-676c0428fc25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGxhbmRzY2FwZSUyMHRyYXZlbHxlbnwxfHx8fDE3NTU3MzgwNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Swiss Alps" class="detail-image">
-
-                <div class="detail-content">
-                    <div class="detail-stats">
-                        <div>
-                            <span>👁️ 1250</span>
-                            <span style="margin-left: 16px;">🕒 2 hours ago</span>
-                        </div>
-                    </div>
-
-                    <h1 class="detail-title">스위스 알프스에서의 황홀한 아침 하이킹</h1>
-                    <p class="detail-text">
-                        오전 5시에 일어나서 본 이 놀라운 일출 풍경. 차가운 산 공기와 멋진 전망이 모든 걸음을 가치 있게 만들었어요! 케이블카를 타고 올라가는 것 자체가 모험이었습니다. 팁: 여름에도 고도가 높으면 추우니 옷을 여러 겹 준비하세요. 알프스의 웅장함은 정말 말로 표현할 수 없을 정도예요. 특히 새벽 하이킹은 사람도 적고 고요한 자연을 온전히 느낄 수 있어서 추천합니다.
-                    </p>
-
-                    <div class="detail-actions">
-                        <div class="action-group">
-                            <button class="action-button" id="like-button">
-                                <span>❤️</span>
-                                <span id="like-count">127</span>
+                        <!-- Navigation Buttons -->
+                        <div class="flex justify-between items-center mt-8">
+                            <button onclick="previousSlide()" id="prev-btn" class="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-50">
+                                <span>←</span>
                             </button>
-                            <button class="action-button">
-                                <span>💬</span>
-                                <span>23</span>
+
+                            <div class="text-center">
+                                <p class="text-sm text-muted-foreground">
+                                    <span id="current-slide">1</span> / 4
+                                </p>
+                                <p class="text-xs text-muted-foreground mt-1">
+                                    左右にスワイプしてください
+                                </p>
+                            </div>
+
+                            <button onclick="nextSlide()" id="next-btn" class="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-50">
+                                <span>→</span>
                             </button>
                         </div>
-                        <button class="action-button">📤</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Tab -->
+        <div id="portfolio-content" class="tab-content">
+            <div class="bg-gradient-to-br from-background to-secondary/30 p-6 min-h-screen flex flex-col">
+                <div class="max-w-4xl mx-auto flex-1">
+                    <!-- Header -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold mb-4 gradient-text">私のポートフォリオWebサイト</h1>
+                        <p class="text-muted-foreground max-w-2xl mx-auto">
+                            ブラック&ホワイトテーマのすっきりした個人ポートフォリオWebサイトです。
+                            自己紹介、職歴、サイドプロジェクトを含む完全なポートフォリオを確認してダウンロードしてください。
+                        </p>
                     </div>
 
-                    <div class="comments-section">
-                        <h3 class="comments-title">댓글 3개</h3>
+                    <!-- Main Portfolio Card -->
+                    <div class="bg-card rounded-lg border border-border mb-8 overflow-hidden card-hover">
+                        <div class="p-6 pb-4">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="text-xl">👤</span>
+                                        <h2 class="text-xl font-semibold">個人ポートフォリオWebサイト</h2>
+                                    </div>
+                                    <span class="bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full mb-3 inline-block">
+                                        Black & White Theme
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-muted-foreground">
+                                ブラックとホワイトを基調とした、すっきりした専門的なポートフォリオWebサイトです。
+                            </p>
+                        </div>
                         
-                        <form class="comment-form">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150" alt="내 프로필" class="comment-avatar">
-                            <div class="comment-input-group">
-                                <input type="text" class="comment-input" placeholder="댓글을 입력하세요..." id="comment-input">
-                                <button type="submit" class="comment-submit" disabled>📤</button>
-                            </div>
-                        </form>
-
-                        <div class="comment">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="김민수" class="comment-avatar">
-                            <div class="comment-content">
-                                <div class="comment-bubble">
-                                    <div class="comment-author">김민수</div>
-                                    <div class="comment-text">정말 멋진 사진이네요! 저도 다음에 꼭 가보고 싶어요 ✨</div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <!-- Features -->
+                                <div>
+                                    <h4 class="font-medium mb-3 flex items-center gap-2">
+                                        <span>📁</span>
+                                        含まれるセクション
+                                    </h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
+                                            <span class="text-primary">👤</span>
+                                            <span>自己紹介</span>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
+                                            <span class="text-primary">💼</span>
+                                            <span>職歴</span>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
+                                            <span class="text-primary">📁</span>
+                                            <span>サイドプロジェクト</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="comment-meta">
-                                    <span>1시간 전</span>
-                                    <button>❤️ 12</button>
-                                    <button>답글</button>
+
+                                <!-- Technical Features -->
+                                <div>
+                                    <h4 class="font-medium mb-3">技術的特徴</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">レスポンシブデザイン</span>
+                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">スクロールアニメーション</span>
+                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">モバイル最適化</span>
+                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">タイムラインレイアウト</span>
+                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">カード型プロジェクト</span>
+                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">スムーズなホバー効果</span>
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="flex gap-4 pt-6">
+                                    <button onclick="previewPortfolio()" class="flex items-center gap-3 flex-1 h-14 text-lg px-6 border border-border rounded-md hover:bg-gray-100 transition-colors">
+                                        <span>👁️</span>
+                                        プレビュー
+                                    </button>
+                                    <button onclick="downloadCurrentHTML()" class="flex items-center gap-3 flex-1 h-14 text-lg px-6 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+                                        <span>📥</span>
+                                        HTMLダウンロード
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="bg-card rounded-lg border border-border mb-8 card-hover">
+                        <div class="p-6 pb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl">🔗</span>
+                                <h2 class="text-xl font-semibold">使用方法</h2>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-medium mb-2">プレビュー</h4>
+                                    <p class="text-sm text-muted-foreground">
+                                        「プレビュー」ボタンをクリックすると新しいタブで完成したポートフォリオを確認できます。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-2">ダウンロード & カスタマイズ</h4>
+                                    <p class="text-sm text-muted-foreground">
+                                        HTMLファイルをダウンロードした後、テキストエディターで個人情報を修正して使用してください。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <div class="bg-card rounded-lg border border-border card-hover">
+                        <div class="p-6 pb-4">
+                            <h2 class="text-xl font-semibold">技術スタック</h2>
+                            <p class="text-muted-foreground">
+                                このポートフォリオは以下の技術を使用して制作されました。
+                            </p>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded-full text-sm">HTML5</span>
+                                <span class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded-full text-sm">CSS3</span>
+                                <span class="bg-gray-600 hover:bg-gray-500 text-white px-3 py-1 rounded-full text-sm">JavaScript</span>
+                                <span class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-full text-sm">Responsive Design</span>
+                                <span class="bg-gray-500 hover:bg-gray-400 text-white px-3 py-1 rounded-full text-sm">Animations</span>
+                                <span class="bg-gray-900 hover:bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Modern Layout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Tab -->
+        <div id="projects-content" class="tab-content">
+            <div class="bg-gradient-to-br from-background to-secondary/30 p-6 min-h-screen flex flex-col">
+                <div class="max-w-6xl mx-auto flex-1">
+                    <!-- Header -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold mb-4 gradient-text">プロジェクト一覧</h1>
+                        <p class="text-muted-foreground max-w-2xl mx-auto">
+                            これまで手がけたプロジェクトをご覧ください。
+                        </p>
+                    </div>
+
+                    <!-- Filter Buttons -->
+                    <div class="flex flex-wrap justify-center gap-4 mb-8">
+                        <button onclick="filterProjects('all')" class="filter-btn active px-4 py-2 rounded-full border border-border transition-colors">
+                            すべて
+                        </button>
+                        <button onclick="filterProjects('web')" class="filter-btn px-4 py-2 rounded-full border border-border transition-colors">
+                            Webアプリ
+                        </button>
+                        <button onclick="filterProjects('mobile')" class="filter-btn px-4 py-2 rounded-full border border-border transition-colors">
+                            モバイル
+                        </button>
+                        <button onclick="filterProjects('ai')" class="filter-btn px-4 py-2 rounded-full border border-border transition-colors">
+                            AI/ML
+                        </button>
+                    </div>
+
+                    <!-- Projects Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Project 1 -->
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
+                            <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                <span class="text-4xl">🌐</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">Eコマースプラットフォーム</h3>
+                                    <span class="text-xs bg-secondary px-2 py-1 rounded-full">Web</span>
+                                </div>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    React × Node.jsで構築した本格的なEコマースプラットフォーム。決済システム、在庫管理、ユーザー認証を実装。
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">React</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Node.js</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">MongoDB</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Stripe</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 text-sm px-4 py-2 border border-border rounded hover:bg-gray-100 transition-colors">
+                                        詳細
+                                    </button>
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
+                                        GitHub
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="comment">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150" alt="이지은" class="comment-avatar">
-                            <div class="comment-content">
-                                <div class="comment-bubble">
-                                    <div class="comment-author">이지은</div>
-                                    <div class="comment-text">사진만 봐도 그 곳의 아름다움이 느껴져요. 팁도 공유해주셔서 감사해요!</div>
+                        <!-- Project 2 -->
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="mobile">
+                            <div class="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                                <span class="text-4xl">📱</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">タスク管理アプリ</h3>
+                                    <span class="text-xs bg-blue-100 px-2 py-1 rounded-full">Mobile</span>
                                 </div>
-                                <div class="comment-meta">
-                                    <span>3시간 전</span>
-                                    <button>❤️ 8</button>
-                                    <button>답글</button>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    React Nativeで開発したクロスプラットフォーム対応のタスク管理アプリ。オフライン同期機能付き。
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">React Native</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">TypeScript</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">SQLite</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 text-sm px-4 py-2 border border-border rounded hover:bg-gray-100 transition-colors">
+                                        詳細
+                                    </button>
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
+                                        GitHub
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="comment">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="박준호" class="comment-avatar">
-                            <div class="comment-content">
-                                <div class="comment-bubble">
-                                    <div class="comment-author">박준호</div>
-                                    <div class="comment-text">와 진짜 환상적이네요! 몇 월에 가셨나요? 날씨는 어땠는지 궁금해요 🌟</div>
+                        <!-- Project 3 -->
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="ai">
+                            <div class="aspect-video bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
+                                <span class="text-4xl">🤖</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">画像認識API</h3>
+                                    <span class="text-xs bg-purple-100 px-2 py-1 rounded-full">AI/ML</span>
                                 </div>
-                                <div class="comment-meta">
-                                    <span>5시간 전</span>
-                                    <button>❤️ 15</button>
-                                    <button>답글</button>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    TensorFlowを使用した画像分類APIサービス。リアルタイム画像解析と高精度な分類を実現。
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Python</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">TensorFlow</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Flask</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Docker</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 text-sm px-4 py-2 border border-border rounded hover:bg-gray-100 transition-colors">
+                                        詳細
+                                    </button>
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
+                                        GitHub
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4 -->
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
+                            <div class="aspect-video bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                                <span class="text-4xl">📊</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">データ可視化ダッシュボード</h3>
+                                    <span class="text-xs bg-secondary px-2 py-1 rounded-full">Web</span>
+                                </div>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    D3.jsとReactを組み合わせたインタラクティブなデータ可視化ダッシュボード。リアルタイムデータ更新対応。
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">React</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">D3.js</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">WebSocket</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 text-sm px-4 py-2 border border-border rounded hover:bg-gray-100 transition-colors">
+                                        詳細
+                                    </button>
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
+                                        GitHub
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 5 -->
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
+                            <div class="aspect-video bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
+                                <span class="text-4xl">🎵</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">音楽ストリーミングアプリ</h3>
+                                    <span class="text-xs bg-secondary px-2 py-1 rounded-full">Web</span>
+                                </div>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    Spotify APIを活用した音楽ストリーミングWebアプリ。プレイリスト機能とレコメンド機能を実装。
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Vue.js</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Spotify API</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Firebase</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 text-sm px-4 py-2 border border-border rounded hover:bg-gray-100 transition-colors">
+                                        詳細
+                                    </button>
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
+                                        GitHub
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 6 -->
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="mobile">
+                            <div class="aspect-video bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center">
+                                <span class="text-4xl">🍔</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">フードデリバリーアプリ</h3>
+                                    <span class="text-xs bg-blue-100 px-2 py-1 rounded-full">Mobile</span>
+                                </div>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    リアルタイム位置追跡機能付きのフードデリバリーアプリ。注文から配達まで一貫したUXを提供。
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Flutter</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Firebase</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Google Maps</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 text-sm px-4 py-2 border border-border rounded hover:bg-gray-100 transition-colors">
+                                        詳細
+                                    </button>
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
+                                        GitHub
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-
-        <!-- Floating Background Elements -->
-        <div class="floating-bg floating-1"></div>
-        <div class="floating-bg floating-2"></div>
-        <div class="floating-bg floating-3"></div>
+        </div>
     </div>
 
     <script>
-        // App State
-        let currentTab = 'faq';
-        let currentQuestion = 0;
-        let quizScores = { adventure: 0, comfort: 0, culture: 0, nature: 0 };
-        let isLiked = false;
-        let tabList = ['bulletin', 'quiz', 'faq'];
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
 
-        // Quiz Data
-        const quizData = [
-            {
-                question: "이상적인 휴가 기간은 얼마나 되나요?",
-                icon: "✈️",
-                answers: [
-                    { text: "주말 여행 (2-3일)", scores: { adventure: 1, comfort: 2, culture: 1, nature: 1 } },
-                    { text: "일주일 정도", scores: { adventure: 2, comfort: 2, culture: 2, nature: 2 } },
-                    { text: "2주 이상의 장기 여행", scores: { adventure: 3, comfort: 1, culture: 3, nature: 3 } },
-                    { text: "한 달 이상 살아보기", scores: { adventure: 3, comfort: 1, culture: 3, nature: 2 } }
-                ]
-            },
-            {
-                question: "여행지에서 가장 중요하게 생각하는 것은?",
-                icon: "📍",
-                answers: [
-                    { text: "편안한 숙소와 시설", scores: { adventure: 0, comfort: 3, culture: 1, nature: 0 } },
-                    { text: "현지 문화 체험", scores: { adventure: 1, comfort: 1, culture: 3, nature: 1 } },
-                    { text: "자연 경관과 아웃도어 활동", scores: { adventure: 3, comfort: 0, culture: 1, nature: 3 } },
-                    { text: "새로운 모험과 도전", scores: { adventure: 3, comfort: 0, culture: 2, nature: 2 } }
-                ]
-            },
-            {
-                question: "여행 중 숙소 선택 기준은?",
-                icon: "❤️",
-                answers: [
-                    { text: "5성급 호텔이나 리조트", scores: { adventure: 0, comfort: 3, culture: 1, nature: 1 } },
-                    { text: "현지 게스트하우스나 민박", scores: { adventure: 2, comfort: 1, culture: 3, nature: 2 } },
-                    { text: "캠핑이나 글램핑", scores: { adventure: 3, comfort: 1, culture: 1, nature: 3 } },
-                    { text: "백패커 호스텔", scores: { adventure: 3, comfort: 0, culture: 2, nature: 2 } }
-                ]
-            },
-            {
-                question: "여행 중 가장 좋아하는 활동은?",
-                icon: "📸",
-                answers: [
-                    { text: "스파와 휴식, 쇼핑", scores: { adventure: 0, comfort: 3, culture: 1, nature: 0 } },
-                    { text: "박물관, 역사 유적지 방문", scores: { adventure: 1, comfort: 2, culture: 3, nature: 1 } },
-                    { text: "하이킹, 수상 스포츠", scores: { adventure: 3, comfort: 0, culture: 1, nature: 3 } },
-                    { text: "익스트림 스포츠", scores: { adventure: 3, comfort: 0, culture: 0, nature: 2 } }
-                ]
-            },
-            {
-                question: "현지 음식에 대한 당신의 스타일은?",
-                icon: "🍽️",
-                answers: [
-                    { text: "검증된 유명 레스토랑만", scores: { adventure: 0, comfort: 3, culture: 2, nature: 0 } },
-                    { text: "현지인들이 가는 맛집 탐방", scores: { adventure: 2, comfort: 1, culture: 3, nature: 1 } },
-                    { text: "길거리 음식도 과감하게", scores: { adventure: 3, comfort: 0, culture: 3, nature: 1 } },
-                    { text: "직접 요리 체험하기", scores: { adventure: 2, comfort: 1, culture: 3, nature: 2 } }
-                ]
+            // Show selected tab content
+            document.getElementById(tabName + '-content').classList.add('active');
+
+            // Update tab buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('text-foreground');
+                btn.classList.add('text-muted-foreground');
+                btn.querySelector('.tab-indicator').classList.add('hidden');
+            });
+
+            // Activate selected tab button
+            const activeBtn = document.getElementById('tab-' + tabName);
+            activeBtn.classList.remove('text-muted-foreground');
+            activeBtn.classList.add('text-foreground');
+            activeBtn.querySelector('.tab-indicator').classList.remove('hidden');
+        }
+
+        // Career slider functionality
+        let currentSlideIndex = 0;
+        const totalSlides = 4;
+
+        function updateSlider() {
+            const slides = document.querySelectorAll('.swiper-slide');
+            const progressBars = document.querySelectorAll('.progress-bar');
+            
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlideIndex) {
+                    slide.classList.add('active');
+                } else if (index < currentSlideIndex) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            progressBars.forEach((bar, index) => {
+                bar.classList.toggle('active', index === currentSlideIndex);
+            });
+
+            document.getElementById('current-slide').textContent = currentSlideIndex + 1;
+            
+            // Update button states
+            document.getElementById('prev-btn').disabled = currentSlideIndex === 0;
+            document.getElementById('next-btn').disabled = currentSlideIndex === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateSlider();
             }
-        ];
+        }
 
-        const travelTypes = {
-            comfort: {
-                title: "편안함을 추구하는 여행자",
-                description: "럭셔리한 여행을 선호하며, 편안한 휴식과 완벽한 서비스를 중요하게 생각합니다.",
-                icon: "🏖️",
-                recommendations: ["몰디브", "발리", "하와이", "산토리니"]
-            },
-            culture: {
-                title: "문화 탐험가",
-                description: "현지 문화와 역사를 깊이 있게 체험하며, 진정성 있는 여행을 추구합니다.",
-                icon: "🏛️",
-                recommendations: ["교토", "로마", "이스탄불", "페루"]
-            },
-            adventure: {
-                title: "모험을 즐기는 여행자",
-                description: "새로운 도전과 스릴을 찾으며, 예측 불가능한 여행을 즐깁니다.",
-                icon: "🎒",
-                recommendations: ["뉴질랜드", "코스타리카", "네팔", "파타고니아"]
-            },
-            nature: {
-                title: "자연을 사랑하는 여행자",
-                description: "자연 속에서 평온함을 찾으며, 환경과 조화로운 여행을 선호합니다.",
-                icon: "🌲",
-                recommendations: ["노르웨이", "캐나다", "아이슬란드", "뉴질랜드"]
+        function previousSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateSlider();
             }
-        };
+        }
 
-        // DOM Elements
-        const navTabs = document.querySelectorAll('.nav-tab');
-        const navIndicator = document.getElementById('navIndicator');
-        const pages = document.querySelectorAll('.page');
-        const navigation = document.getElementById('navigation');
+        // Project filtering functionality
+        function filterProjects(category) {
+            const projectCards = document.querySelectorAll('.project-card');
+            const filterBtns = document.querySelectorAll('.filter-btn');
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeNavigation();
-            initializeFAQ();
-            initializeBulletin();
-            initializeQuiz();
-            initializePostDetail();
+            // Update filter buttons
+            filterBtns.forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-primary-foreground');
+                btn.classList.add('hover:bg-gray-100');
+            });
+
+            event.target.classList.add('active', 'bg-primary', 'text-primary-foreground');
+            event.target.classList.remove('hover:bg-gray-100');
+
+            // Filter projects
+            projectCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Portfolio functions
+        function previewPortfolio() {
+            window.open(window.location.href, '_blank');
+        }
+
+        function downloadCurrentHTML() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'my-portfolio.html';
+            document.body.appendChild(a);
+            a.click();
+            
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Show success message
+            showToast('ポートフォリオファイルが正常にダウンロードされました！');
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 bg-black text-white';
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+                toast.style.opacity = '1';
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize slider
+        updateSlider();
+
+        // Add touch support for career slider
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.querySelector('.swiper-container').addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
         });
 
-        // Navigation
-        function initializeNavigation() {
-            navTabs.forEach((tab, index) => {
-                tab.addEventListener('click', () => {
-                    const tabName = tab.dataset.tab;
-                    switchTab(tabName, index);
-                });
-            });
-        }
+        document.querySelector('.swiper-container').addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
 
-        function switchTab(tabName, index) {
-            
-            for(let i = 0;  i < tabList.length; i++){
-                let currentTabId = '#' + tabList[i] + '-page';  
-                if(tabName == tabList[i]){
-                    document.querySelector(currentTabId).style.display = 'block';
-                }else{
-                    document.querySelector(currentTabId).style.display = 'none';
-                }
+        function handleSwipe() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) {
+                nextSlide();
+            } else if (touchEndX > touchStartX + threshold) {
+                previousSlide();
             }
-
-            // Update active tab
-            navTabs.forEach(tab => tab.classList.remove('active'));
-            navTabs[index].classList.add('active');
-            
-            // Move indicator
-            navIndicator.style.left = `${index * 33.333}%`;
-            
-            // Switch page
-            pages.forEach(page => {
-                page.classList.remove('active');
-                if (page.id === `${tabName}-page`) {
-                    page.classList.add('active');
-                }
-            });
-            
-            // Show/hide navigation
-            if (tabName === 'detail') {
-                navigation.classList.add('hidden');
-            } else {
-                navigation.classList.remove('hidden');
-            }
-            
-            currentTab = tabName;
-        }
-
-        // FAQ
-        function initializeFAQ() {
-            const faqItems = document.querySelectorAll('.faq-item');
-
-            faqItems.forEach(item => {
-                //const question = item.querySelector('.faq-question');
-                item.addEventListener('click', () => {
-
-                    const isOpen = item.classList.contains('open');
-                    
-                    // Close all items
-                    faqItems.forEach(i => i.classList.remove('open'));
-                    
-                    // Toggle current item
-                    if (!isOpen) {
-                        item.classList.add('open');
-                    }
-                });
-            });
-        }
-
-        // Bulletin Board
-        function initializeBulletin() {
-            const postCards = document.querySelectorAll('.post-card');
-            
-            postCards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    // Prevent click on action buttons
-                    if (e.target.closest('.post-actions')) return;
-                    
-                    showPostDetail();
-                });
-            });
-
-            // Post action buttons
-            const postActions = document.querySelectorAll('.post-action');
-            postActions.forEach(action => {
-                action.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    // Handle like, comment, share actions
-                });
-            });
-        }
-
-        function showPostDetail() {
-            // Hide navigation
-            navigation.classList.add('hidden');
-            
-            // Show detail page
-            pages.forEach(page => page.classList.remove('active'));
-            document.getElementById('detail-page').classList.add('active');
-            document.getElementById('detail-page').classList.remove('hidden');
-        }
-
-        // Quiz
-        function initializeQuiz() {
-            renderQuizQuestion();
-            
-            const retryButton = document.querySelector('.retry-button');
-            retryButton.addEventListener('click', resetQuiz);
-        }
-
-        function renderQuizQuestion() {
-            const quizCard = document.querySelector('.quiz-card');
-            const progressInfo = document.querySelector('.progress-info');
-            const progressFill = document.querySelector('.progress-fill');
-            
-            const question = quizData[currentQuestion];
-            const progress = ((currentQuestion + 1) / quizData.length) * 100;
-            
-            // Update progress
-            progressInfo.innerHTML = `<span>${currentQuestion + 1} / ${quizData.length}</span><span>${Math.round(progress)}%</span>`;
-            progressFill.style.width = `${progress}%`;
-            
-            // Update question
-            quizCard.innerHTML = `
-                <div class="quiz-question-header">
-                    <span class="quiz-icon">${question.icon}</span>
-                    <h3 class="quiz-question">${question.question}</h3>
-                </div>
-                <div class="quiz-answers">
-                    ${question.answers.map((answer, index) => `
-                        <button class="quiz-answer" data-answer="${index}">
-                            <span>${answer.text}</span>
-                            <span>→</span>
-                        </button>
-                    `).join('')}
-                </div>
-            `;
-
-            // Add event listeners
-            const answerButtons = quizCard.querySelectorAll('.quiz-answer');
-            answerButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const answerIndex = parseInt(button.dataset.answer);
-                    handleQuizAnswer(answerIndex);
-                });
-            });
-        }
-
-        function handleQuizAnswer(answerIndex) {
-            const question = quizData[currentQuestion];
-            const selectedAnswer = question.answers[answerIndex];
-            // Update scores
-            Object.keys(selectedAnswer.scores).forEach(key => {
-                quizScores[key] += selectedAnswer.scores[key];
-            });
-            
-            // Move to next question or show result
-            if (currentQuestion < quizData.length - 1) {
-                currentQuestion++;
-                setTimeout(() => renderQuizQuestion(), 300);
-            } else {
-                setTimeout(() => showQuizResult(), 300);
-            }
-        }
-
-        function showQuizResult() {
-            // Hide quiz card and progress
-            document.querySelector('.quiz-card').classList.add('hidden');
-            document.querySelector('.quiz-progress').classList.add('hidden');
-            
-            // Get top travel type
-            const maxScore = Math.max(...Object.values(quizScores));
-            const topType = Object.keys(quizScores).find(key => quizScores[key] === maxScore);
-            const result = travelTypes[topType];
-            
-            // Show result
-            const resultCard = document.getElementById('quiz-result');
-            resultCard.innerHTML = `
-                <div class="result-icon">${result.icon}</div>
-                <h3 class="result-title">${result.title}</h3>
-                <p class="result-description">${result.description}</p>
-                
-                <div class="result-recommendations">
-                    <div class="result-rec-title">추천 여행지</div>
-                    <div class="result-places">
-                        ${result.recommendations.map(place => `
-                            <span class="result-place">${place}</span>
-                        `).join('')}
-                    </div>
-                </div>
-
-                <div class="result-scores">
-                    <h4 class="result-rec-title">성향 분석</h4>
-                    ${Object.entries(quizScores).map(([type, score]) => {
-                        const label = type === 'adventure' ? '모험' : 
-                                    type === 'comfort' ? '편안함' : 
-                                    type === 'culture' ? '문화' : '자연';
-                        const percentage = (score / 15) * 100;
-                        return `
-                            <div class="score-item">
-                                <span class="score-label">${label}</span>
-                                <div class="score-bar">
-                                    <div class="score-fill" style="width: ${percentage}%"></div>
-                                </div>
-                                <span class="score-value">${score}</span>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-
-                <button class="retry-button">🔄 다시 테스트하기</button>
-            `;
-            
-            resultCard.classList.remove('hidden');
-            
-            // Add retry button listener
-            resultCard.querySelector('.retry-button').addEventListener('click', resetQuiz);
-        }
-
-        function resetQuiz() {
-            currentQuestion = 0;
-            quizScores = { adventure: 0, comfort: 0, culture: 0, nature: 0 };
-            
-            // Show quiz elements
-            document.querySelector('.quiz-card').classList.remove('hidden');
-            document.querySelector('.quiz-progress').classList.remove('hidden');
-            document.getElementById('quiz-result').classList.add('hidden');
-            
-            // Render first question
-            renderQuizQuestion();
-        }
-
-        // Post Detail
-        function initializePostDetail() {
-            const backButton = document.querySelector('.back-button');
-            const likeButton = document.getElementById('like-button');
-            const commentInput = document.getElementById('comment-input');
-            const commentSubmit = document.querySelector('.comment-submit');
-            
-            backButton.addEventListener('click', () => {
-                // Show navigation
-                navigation.classList.remove('hidden');
-                
-                // Go back to bulletin
-                pages.forEach(page => page.classList.remove('active'));
-                document.getElementById('bulletin-page').classList.add('active');
-                document.getElementById('detail-page').classList.add('hidden');
-                
-                // Update nav
-                navTabs.forEach(tab => tab.classList.remove('active'));
-                navTabs[1].classList.add('active'); // bulletin tab
-                navIndicator.style.left = '33.333%';
-            });
-            
-            likeButton.addEventListener('click', () => {
-                isLiked = !isLiked;
-                const likeCount = document.getElementById('like-count');
-                const currentCount = parseInt(likeCount.textContent);
-                
-                if (isLiked) {
-                    likeButton.classList.add('liked');
-                    likeCount.textContent = currentCount + 1;
-                } else {
-                    likeButton.classList.remove('liked');
-                    likeCount.textContent = currentCount - 1;
-                }
-            });
-            
-            commentInput.addEventListener('input', (e) => {
-                const hasText = e.target.value.trim().length > 0;
-                commentSubmit.disabled = !hasText;
-            });
-            
-            document.querySelector('.comment-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (commentInput.value.trim()) {
-                    // Add comment (in a real app, this would send to server)
-                    commentInput.value = '';
-                    commentSubmit.disabled = true;
-                }
-            });
         }
     </script>
 </body>
