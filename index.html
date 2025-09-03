@@ -107,6 +107,10 @@
             width: 8px;
             background-color: #f1f3f4;
         }
+
+        .card-layer{
+            width: 600px;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-background">
@@ -126,13 +130,13 @@
                         <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary"></div>
                     </button>
                     <button onclick="showTab('career')" id="tab-career" class="tab-btn relative py-2 transition-colors duration-200 text-muted-foreground hover:text-foreground">
-                        プロジェクト
+                        経歴記述書
                         <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary hidden"></div>
                     </button>
-                    <button onclick="showTab('portfolio')" id="tab-portfolio" class="tab-btn relative py-2 transition-colors duration-200 text-muted-foreground hover:text-foreground">
+                    <!-- <button onclick="showTab('portfolio')" id="tab-portfolio" class="tab-btn relative py-2 transition-colors duration-200 text-muted-foreground hover:text-foreground">
                         ポートフォリオ
                         <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary hidden"></div>
-                    </button>
+                    </button> -->
                     <button onclick="showTab('projects')" id="tab-projects" class="tab-btn relative py-2 transition-colors duration-200 text-muted-foreground hover:text-foreground">
                         プロジェクト
                         <div class="tab-indicator absolute -bottom-2 left-0 right-0 h-0.5 bg-primary hidden"></div>
@@ -216,10 +220,10 @@
                                 </div>
 
                                 <!-- Download Resume -->
-                                <button class="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+                                <!-- <button class="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
                                     <span>📥</span>
                                     履歴書ダウンロード
-                                </button>
+                                </button> -->
                             </div>
                         </div>
 
@@ -350,12 +354,12 @@
         <!-- Career Tab -->
         <div id="career-content" class="tab-content">
             <div class="bg-gradient-to-br from-background to-secondary/30 p-6 min-h-screen flex flex-col">
-                <div class="max-w-4xl mx-auto flex-1">
+                <div class="max-w-2xl mx-auto flex-1">
                     <!-- Header -->
-                    <div class="text-center mb-12">
-                        <h1 class="text-4xl font-bold mb-4 gradient-text">プロジェクト</h1>
+                    <div class="text-center mb-12 card-layer">
+                        <h1 class="text-4xl font-bold mb-4 gradient-text">経歴記述書</h1>
                         <p class="text-muted-foreground max-w-2xl mx-auto">
-                            カードを左右にスワイプするか、ボタンをクリックして職歴を探索してください。
+                            経歴記述書です。ボタンをクリックしてください
                         </p>
                     </div>
 
@@ -379,11 +383,13 @@
                                 
                                 <h2 class="text-xl font-semibold mb-2">韓国電気安全公社の維持管理</h2>
                                 
-                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
+                                <div class="flex items-center gap-4 text-muted-foreground mb-2">
                                     <div class="flex items-center gap-2">
                                         <span>🏢</span>
                                         <span>韓国電気安全公社MAPシステム開発</span>
                                     </div>
+                                </div>
+                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
                                     <div class="flex items-center gap-2">
                                         <span>📍</span>
                                         <span>韓国、ソウル</span>
@@ -453,12 +459,14 @@
                                 </div>
                                 
                                 <h2 class="text-xl font-semibold mb-2">KRX(韓国取引所) CBDC 炭素排出権 テストシステム開発</h2>
-                                
-                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
+
+                                <div class="flex items-center gap-4 text-muted-foreground mb-2">
                                     <div class="flex items-center gap-2">
                                         <span>🏢</span>
                                         <span>炭素排出権販売システムのテストケース開発</span>
                                     </div>
+                                </div>
+                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
                                     <div class="flex items-center gap-2">
                                         <span>📍</span>
                                         <span>韓国、ソウル</span>
@@ -527,11 +535,13 @@
                                 
                                 <h2 class="text-xl font-semibold mb-2">検索#beauty</h2>
                                 
-                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
+                                <div class="flex items-center gap-4 text-muted-foreground mb-2">
                                     <div class="flex items-center gap-2">
                                         <span>🏢</span>
                                         <span>病院マーケティングアプリ</span>
                                     </div>
+                                </div>
+                                <div class="flex items-center gap-4 text-muted-foreground mb-6">
                                     <div class="flex items-center gap-2">
                                         <span>📍</span>
                                         <span>韓国、ソウル</span>
@@ -596,146 +606,13 @@
                                     <span id="current-slide">1</span> / 3
                                 </p>
                                 <p class="text-xs text-muted-foreground mt-1">
-                                    左右にスワイプしてください
+                                    ボタンをクリックしてください。
                                 </p>
                             </div>
 
                             <button onclick="nextSlide()" id="next-btn" class="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-50">
                                 <span>→</span>
                             </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Portfolio Tab -->
-        <div id="portfolio-content" class="tab-content">
-            <div class="bg-gradient-to-br from-background to-secondary/30 p-6 min-h-screen flex flex-col">
-                <div class="max-w-4xl mx-auto flex-1">
-                    <!-- Header -->
-                    <div class="text-center mb-12">
-                        <h1 class="text-4xl font-bold mb-4 gradient-text">私のポートフォリオWebサイト</h1>
-                        <p class="text-muted-foreground max-w-2xl mx-auto">
-                            ブラック&ホワイトテーマのすっきりした個人ポートフォリオWebサイトです。
-                            自己紹介、職歴、サイドプロジェクトを含む完全なポートフォリオを確認してダウンロードしてください。
-                        </p>
-                    </div>
-
-                    <!-- Main Portfolio Card -->
-                    <div class="bg-card rounded-lg border border-border mb-8 overflow-hidden card-hover">
-                        <div class="p-6 pb-4">
-                            <div class="flex items-start justify-between">
-                                <div>
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <span class="text-xl">👤</span>
-                                        <h2 class="text-xl font-semibold">個人ポートフォリオWebサイト</h2>
-                                    </div>
-                                    <span class="bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full mb-3 inline-block">
-                                        Black & White Theme
-                                    </span>
-                                </div>
-                            </div>
-                            <p class="text-muted-foreground">
-                                ブラックとホワイトを基調とした、すっきりした専門的なポートフォリオWebサイトです。
-                            </p>
-                        </div>
-                        
-                        <div class="p-6">
-                            <div class="space-y-6">
-                                <!-- Features -->
-                                <div>
-                                    <h4 class="font-medium mb-3 flex items-center gap-2">
-                                        <span>📁</span>
-                                        含まれるセクション
-                                    </h4>
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        <div class="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
-                                            <span class="text-primary">👤</span>
-                                            <span>自己紹介</span>
-                                        </div>
-                                        <div class="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
-                                            <span class="text-primary">💼</span>
-                                            <span>職歴</span>
-                                        </div>
-                                        <div class="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
-                                            <span class="text-primary">📁</span>
-                                            <span>サイドプロジェクト</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Technical Features -->
-                                <div>
-                                    <h4 class="font-medium mb-3">技術的特徴</h4>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">レスポンシブデザイン</span>
-                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">スクロールアニメーション</span>
-                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">モバイル最適化</span>
-                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">タイムラインレイアウト</span>
-                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">カード型プロジェクト</span>
-                                        <span class="bg-border text-foreground text-sm px-3 py-1 rounded-full border">スムーズなホバー効果</span>
-                                    </div>
-                                </div>
-
-                                <!-- Actions -->
-                                <div class="flex gap-4 pt-6">
-                                    <button onclick="previewPortfolio()" class="flex items-center gap-3 flex-1 h-14 text-lg px-6 border border-border rounded-md hover:bg-gray-100 transition-colors">
-                                        <span>👁️</span>
-                                        プレビュー
-                                    </button>
-                                    <button onclick="downloadCurrentHTML()" class="flex items-center gap-3 flex-1 h-14 text-lg px-6 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-                                        <span>📥</span>
-                                        HTMLダウンロード
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Additional Info -->
-                    <div class="bg-card rounded-lg border border-border mb-8 card-hover">
-                        <div class="p-6 pb-4">
-                            <div class="flex items-center gap-2">
-                                <span class="text-xl">🔗</span>
-                                <h2 class="text-xl font-semibold">使用方法</h2>
-                            </div>
-                        </div>
-                        <div class="p-6 pt-0">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <h4 class="font-medium mb-2">プレビュー</h4>
-                                    <p class="text-sm text-muted-foreground">
-                                        「プレビュー」ボタンをクリックすると新しいタブで完成したポートフォリオを確認できます。
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium mb-2">ダウンロード & カスタマイズ</h4>
-                                    <p class="text-sm text-muted-foreground">
-                                        HTMLファイルをダウンロードした後、テキストエディターで個人情報を修正して使用してください。
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tech Stack -->
-                    <div class="bg-card rounded-lg border border-border card-hover">
-                        <div class="p-6 pb-4">
-                            <h2 class="text-xl font-semibold">技術スタック</h2>
-                            <p class="text-muted-foreground">
-                                このポートフォリオは以下の技術を使用して制作されました。
-                            </p>
-                        </div>
-                        <div class="p-6 pt-0">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded-full text-sm">HTML5</span>
-                                <span class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded-full text-sm">CSS3</span>
-                                <span class="bg-gray-600 hover:bg-gray-500 text-white px-3 py-1 rounded-full text-sm">JavaScript</span>
-                                <span class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-full text-sm">Responsive Design</span>
-                                <span class="bg-gray-500 hover:bg-gray-400 text-white px-3 py-1 rounded-full text-sm">Animations</span>
-                                <span class="bg-gray-900 hover:bg-gray-800 text-white px-3 py-1 rounded-full text-sm">Modern Layout</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -750,12 +627,12 @@
                     <div class="text-center mb-12">
                         <h1 class="text-4xl font-bold mb-4 gradient-text">プロジェクト一覧</h1>
                         <p class="text-muted-foreground max-w-2xl mx-auto">
-                            これまで手がけたプロジェクトをご覧ください。
+                            これまでサイドプロジェクトをご覧ください。
                         </p>
                     </div>
 
                     <!-- Filter Buttons -->
-                    <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <!-- <div class="flex flex-wrap justify-center gap-4 mb-8">
                         <button onclick="filterProjects('all')" class="filter-btn active px-4 py-2 rounded-full border border-border transition-colors">
                             すべて
                         </button>
@@ -768,41 +645,96 @@
                         <button onclick="filterProjects('ai')" class="filter-btn px-4 py-2 rounded-full border border-border transition-colors">
                             AI/ML
                         </button>
-                    </div>
+                    </div> -->
 
                     <!-- Projects Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Project 1 -->
                         <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
-                            <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                <span class="text-4xl">🌐</span>
+                            <div class="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                                <span class="text-4xl">✈️</span>
                             </div>
                             <div class="p-6">
                                 <div class="flex items-center justify-between mb-2">
-                                    <h3 class="font-semibold">Eコマースプラットフォーム</h3>
+                                    <h3 class="font-semibold">미정</h3>
                                     <span class="text-xs bg-secondary px-2 py-1 rounded-full">Web</span>
                                 </div>
                                 <p class="text-muted-foreground text-sm mb-4">
-                                    React × Node.jsで構築した本格的なEコマースプラットフォーム。決済システム、在庫管理、ユーザー認証を実装。
+                                    사용자의 질문에 맞는 AI 로 여행지 추천 및 여행지 코스 관람
                                 </p>
                                 <div class="flex flex-wrap gap-1 mb-4">
-                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">React</span>
-                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Node.js</span>
-                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">MongoDB</span>
-                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">Stripe</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">SpringBoot</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">JPA</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">MyBatis</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">JWT</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">OAuth</span>
                                 </div>
                                 <div class="flex gap-2">
-                                    <button class="flex-1 text-sm px-4 py-2 border border-border rounded hover:bg-gray-100 transition-colors">
-                                        詳細
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors" onclick="window.open('https://github.com/AiRn33/Qaru')">
+                                        GitHub
                                     </button>
-                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
+                            <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                <span class="text-4xl">📱</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">Qaru</h3>
+                                    <span class="text-xs bg-secondary px-2 py-1 rounded-full">Web</span>
+                                </div>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    QRコード生成に基づいて掲示板（CRUD、写真）機能、QR生成、ログイン、会員管理を使用したサイドプロジェクト
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">SpringBoot</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">JPA</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">MyBatis</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">JWT</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">OAuth</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors" onclick="window.open('https://github.com/AiRn33/Qaru')">
                                         GitHub
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Project 2 -->
+                        <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
+                            <div class="aspect-video bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center">
+                                <span class="text-4xl">😺</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-semibold">Forever-Pet</h3>
+                                    <span class="text-xs bg-secondary px-2 py-1 rounded-full">Web</span>
+                                </div>
+                                <p class="text-muted-foreground text-sm mb-4">
+                                    愛犬用品を販売する買物をサイドプロジェクト(5人チーム)<br>
+                                    担当 : ユーザー関連API機能を実装<br>
+                                    (セキュリティ、JWTトークン、ログイン、会員登録、ユーザー関係機能)
+                                </p>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">SpringBoot</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">JPA</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">JWT</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">OAuth</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 text-sm px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors"
+                                        onclick="window.open('https://github.com/Forever-Pet/foreverpet-backend')">
+                                        GitHub
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 2
                         <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="mobile">
                             <div class="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
                                 <span class="text-4xl">📱</span>
@@ -831,7 +763,6 @@
                             </div>
                         </div>
 
-                        <!-- Project 3 -->
                         <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="ai">
                             <div class="aspect-video bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
                                 <span class="text-4xl">🤖</span>
@@ -861,7 +792,6 @@
                             </div>
                         </div>
 
-                        <!-- Project 4 -->
                         <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
                             <div class="aspect-video bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
                                 <span class="text-4xl">📊</span>
@@ -890,7 +820,6 @@
                             </div>
                         </div>
 
-                        <!-- Project 5 -->
                         <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="web">
                             <div class="aspect-video bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
                                 <span class="text-4xl">🎵</span>
@@ -919,7 +848,6 @@
                             </div>
                         </div>
 
-                        <!-- Project 6 -->
                         <div class="project-card bg-card rounded-lg border border-border overflow-hidden card-hover" data-category="mobile">
                             <div class="aspect-video bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center">
                                 <span class="text-4xl">🍔</span>
@@ -946,7 +874,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
